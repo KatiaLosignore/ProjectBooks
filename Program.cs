@@ -5,17 +5,30 @@ using ProjectBooks.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-builder.Services.AddCors(o => // https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-7.0
+
+builder.Services.AddCors(options =>
 {
-    o.AddDefaultPolicy(policy =>
-    {
-        policy.WithMethods("POST", "PUT", "GET", "OPTIONS");
-        policy.WithOrigins("*");
-        policy.AllowAnyOrigin();
-        policy.AllowAnyHeader();
-    });
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://example.com",
+                                              "http://www.contoso.com");
+                      });
 });
+
+
+//builder.Services.AddCors(o => // https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-7.0
+//{
+//    o.AddDefaultPolicy(policy =>
+//    {
+//        policy.WithMethods("POST", "PUT", "GET", "OPTIONS");
+//        policy.WithOrigins("*");
+//        policy.AllowAnyOrigin();
+//        policy.AllowAnyHeader();
+//    });
+//});
 
 
 // Add services to the container.
@@ -43,6 +56,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(MyAllowSpecificOrigins);
+
 
 app.UseHttpsRedirection();
 
