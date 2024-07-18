@@ -5,6 +5,19 @@ using ProjectBooks.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(o => // https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-7.0
+{
+    o.AddDefaultPolicy(policy =>
+    {
+        policy.WithMethods("POST", "PUT", "GET", "OPTIONS");
+        policy.WithOrigins("*");
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+    });
+});
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
