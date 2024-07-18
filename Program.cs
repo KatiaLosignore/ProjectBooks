@@ -13,8 +13,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://example.com",
-                                              "http://www.contoso.com");
+                          policy.WithOrigins("http://127.0.0.1:5501");
+                                              
                       });
 });
 
@@ -57,6 +57,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//for use the cors policy
 app.UseCors(MyAllowSpecificOrigins);
 
 
