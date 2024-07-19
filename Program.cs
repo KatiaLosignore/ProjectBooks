@@ -45,6 +45,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddTransient<IBookservice, Bookservice>();
 builder.Services.AddTransient<IBookrepository, Bookrepository>();
+builder.Services.AddTransient<ICategoryservice, Categoryservice>();
 builder.Services.AddTransient<ICategoryrepository, Categoryrepository>();
 
 
