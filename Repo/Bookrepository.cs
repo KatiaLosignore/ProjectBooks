@@ -7,24 +7,24 @@ namespace ProjectBooks.Repo
     public class Bookrepository : IBookrepository
     {
 
-        private readonly DataContext dbContext;
+        private readonly DataContext _dbContext;
 
 
         public Bookrepository(DataContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
         public List<Book> GetAll()
         {
-            List<Book> books = dbContext.Books.Include(book => book.Category).ToList();
+            List<Book> books = _dbContext.Books.Include(book => book.Category).ToList();
 
             return books;
         }
 
         public Book GetById(int id)
         {
-            Book? book = dbContext.Books.Where(b => b.Id == id).Include(book => book.Category).FirstOrDefault();
+            Book? book = _dbContext.Books.Where(b => b.Id == id).Include(book => book.Category).FirstOrDefault();
 
             if (book != null)
             {
@@ -39,7 +39,7 @@ namespace ProjectBooks.Repo
 
         public List<Book> GetBooksByTitle(string title)
         {
-            List<Book> foundedBooks = dbContext.Books.Where(book => book.Title.ToLower().Contains(title.ToLower())).Include(book => book.Category).ToList();
+            List<Book> foundedBooks = _dbContext.Books.Where(book => book.Title.ToLower().Contains(title.ToLower())).Include(book => book.Category).ToList();
 
             return foundedBooks;
         }
@@ -48,9 +48,9 @@ namespace ProjectBooks.Repo
 
         public void AddBook(Book book)
         {
-            dbContext.Books.Add(book);
+            _dbContext.Books.Add(book);
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
 
@@ -63,7 +63,7 @@ namespace ProjectBooks.Repo
 
         public void UpdateBook(Book updateBook)
         {
-            var existingBook = dbContext.Books.Include(b => b.Category).FirstOrDefault(b => b.Id == updateBook.Id);
+            var existingBook = _dbContext.Books.Include(b => b.Category).FirstOrDefault(b => b.Id == updateBook.Id);
             if (existingBook != null)
             {
                 existingBook.Title = updateBook.Title;
@@ -79,20 +79,20 @@ namespace ProjectBooks.Repo
                     existingBook.Category.Name = updateBook.Category.Name;
                 }
 
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 
         public void Delete(int id)
         {
-            Book? book = dbContext.Books.Where(b => b.Id == id).FirstOrDefault();
+            Book? book = _dbContext.Books.Where(b => b.Id == id).FirstOrDefault();
 
             if (book != null)
             {
 
-                 dbContext.Books.Remove(book);
+                 _dbContext.Books.Remove(book);
 
-                 dbContext.SaveChanges();
+                 _dbContext.SaveChanges();
 
             }
         }

@@ -8,39 +8,39 @@ namespace ProjectBooks.Service
 {
     public class Bookservice : IBookservice
     {
-        private readonly IBookrepository dbRepo;
+        private readonly IBookrepository _dbRepo;
 
 
         public Bookservice(IBookrepository dbRepo)
         {
-            this.dbRepo = dbRepo;
+            this._dbRepo = dbRepo;
         }
 
 
         public List<Book> GetAll()
         {
-            List<Book> books = dbRepo.GetAll();
+            List<Book> books = _dbRepo.GetAll();
 
             return books;
         }
 
         public Book GetById(int id)
         {
-            Book book = dbRepo.GetById(id);
+            Book book = _dbRepo.GetById(id);
 
             return book;
         }
 
         public List<Book> GetBooksByTitle(string title)
         {
-            List<Book> books = dbRepo.GetBooksByTitle(title);
+            List<Book> books = _dbRepo.GetBooksByTitle(title);
 
             return books;
         }
 
         public void AddBook(Book book)
         {
-            dbRepo.AddBook(book);
+            _dbRepo.AddBook(book);
 
         }
 
@@ -57,13 +57,13 @@ namespace ProjectBooks.Service
                 throw new ArgumentException("Il nome della categoria non può essere nullo o vuoto.");
             }
 
-            dbRepo.UpdateBook(upadteBook);
+            _dbRepo.UpdateBook(upadteBook);
         }
 
 
         public void Delete(int id)
         {
-            dbRepo.Delete(id);
+            _dbRepo.Delete(id);
 
         }
 

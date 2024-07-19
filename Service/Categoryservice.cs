@@ -6,42 +6,42 @@ namespace ProjectBooks.Service
     public class Categoryservice : ICategoryservice
     {
 
-        private readonly ICategoryrepository dbRepo;
+        private readonly ICategoryrepository _dbRepo;
 
         public Categoryservice(ICategoryrepository dbRepo)
         {
-            this.dbRepo = dbRepo;
+            this._dbRepo = dbRepo;
         }
 
 
         public List<Category> GetAllCategories()
         {
-            List<Category> categories = dbRepo.GetAllCategories();
+            List<Category> categories = _dbRepo.GetAllCategories();
 
             return categories;
         }
 
         public Category GetByIdCategory(int id)
         {
-            Category category = dbRepo.GetByIdCategory(id);
+            Category category = _dbRepo.GetByIdCategory(id);
 
             return category;
         }
 
         public void AddCategory(Category category)
         {
-            dbRepo.AddCategory(category);
+            _dbRepo.AddCategory(category);
 
         }
 
         public void UpdateCategory(Category updateCategory)
         {
-            dbRepo.UpdateCategory(updateCategory);
+            _dbRepo.UpdateCategory(updateCategory);
         }
 
         public void DeleteCategory(int id)
         {
-            dbRepo.DeleteCategory(id);
+            _dbRepo.DeleteCategory(id);
         }
 
 

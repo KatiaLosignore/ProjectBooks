@@ -7,24 +7,24 @@ namespace ProjectBooks.Repo
     public class Categoryrepository : ICategoryrepository
     {
 
-        private readonly DataContext dbContext;
+        private readonly DataContext _dbContext;
 
         public Categoryrepository(DataContext dbContext)
         {
-            this.dbContext = dbContext;
+            this._dbContext = dbContext;
         }
 
 
         public List<Category> GetAllCategories()
         {
-            List<Category> categories = dbContext.Categories.ToList();
+            List<Category> categories = _dbContext.Categories.ToList();
 
             return categories;
         }
 
         public Category GetByIdCategory(int id)
         {
-            Category? category = dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
+            Category? category = _dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
 
             if (category != null)
             {
@@ -38,28 +38,28 @@ namespace ProjectBooks.Repo
 
         public void AddCategory(Category category)
         {
-            dbContext.Categories.Add(category);
+            _dbContext.Categories.Add(category);
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void UpdateCategory(Category updateCategory)
         {
-            dbContext.Categories.Update(updateCategory);
+            _dbContext.Categories.Update(updateCategory);
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
 
         public void DeleteCategory(int id)
         {
-            Category? category = dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
+            Category? category = _dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
 
             if (category != null)
             {
 
-                dbContext.Categories.Remove(category);
+                _dbContext.Categories.Remove(category);
 
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
             }
         }
