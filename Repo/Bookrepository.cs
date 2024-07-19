@@ -54,14 +54,34 @@ namespace ProjectBooks.Repo
         }
 
 
+        //public void UpdateBook(Book updateBook)
+        //{
+        //    dbContext.Books.Update(updateBook);
+
+        //    dbContext.SaveChanges();
+        //}
+
         public void UpdateBook(Book updateBook)
         {
-            dbContext.Books.Update(updateBook);
+            var existingBook = dbContext.Books.Include(b => b.Category).FirstOrDefault(b => b.Id == updateBook.Id);
+            if (existingBook != null)
+            {
+                existingBook.Title = updateBook.Title;
+                existingBook.Description = updateBook.Description;
+                existingBook.Year = updateBook.Year;
 
-            dbContext.SaveChanges();
+                if (existingBook.Category == null)
+                {
+                    existingBook.Category = new Category { Name = updateBook.Category.Name };
+                }
+                else
+                {
+                    existingBook.Category.Name = updateBook.Category.Name;
+                }
+
+                dbContext.SaveChanges();
+            }
         }
-
-
 
         public void Delete(int id)
         {

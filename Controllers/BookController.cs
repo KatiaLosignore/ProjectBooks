@@ -92,6 +92,47 @@ namespace ProjectBooks.Controllers
 
 
 
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateBook(int id, [FromBody] Book updateBook)
+        //{
+        //    if (updateBook == null)
+        //    {
+        //        return BadRequest("Il campo non può essere nullo!");
+        //    }
+
+        //    if (string.IsNullOrEmpty(updateBook.Title) || string.IsNullOrEmpty(updateBook.Description) || updateBook.Year <= 0)
+        //    {
+        //        return BadRequest("Attenzione, inserisci un Titolo, Descrizione e Anno corretti.");
+        //    }
+
+        //    var existingBook = _dbService.GetById(id);
+        //    if(existingBook == null)
+        //    {
+        //        return BadRequest("Il libro non è stato trovato!");
+        //    }
+
+        //    existingBook.Title = updateBook.Title;
+        //    existingBook.Description = updateBook.Description;
+        //    existingBook.Year = updateBook.Year;
+        //    existingBook.CategoryId = updateBook.CategoryId;
+
+        //    if (existingBook.Category == null)
+        //    {
+        //        existingBook.Category = new Category();
+        //    }
+
+        //    if (updateBook.Category != null)
+        //    {
+        //        existingBook.Category.Name = updateBook.Category.Name;
+        //    }
+
+
+        //    _dbService.UpdateBook(existingBook);
+
+        //    return Ok("Libro aggiornato correttamente!");
+        //}
+
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] Book updateBook)
         {
@@ -106,7 +147,7 @@ namespace ProjectBooks.Controllers
             }
 
             var existingBook = _dbService.GetById(id);
-            if(existingBook == null)
+            if (existingBook == null)
             {
                 return BadRequest("Il libro non è stato trovato!");
             }
@@ -116,23 +157,32 @@ namespace ProjectBooks.Controllers
             existingBook.Year = updateBook.Year;
             existingBook.CategoryId = updateBook.CategoryId;
 
-            if (existingBook.Category == null)
+            if (updateBook.Category == null || string.IsNullOrWhiteSpace(updateBook.Category.Name))
             {
-                existingBook.Category = new Category();
+                return BadRequest("Il nome della categoria non può essere nullo o vuoto.");
             }
 
-            if (updateBook.Category != null)
+            if (existingBook.Category == null)
+            {
+                existingBook.Category = new Category { Name = updateBook.Category.Name };
+            }
+            else
             {
                 existingBook.Category.Name = updateBook.Category.Name;
             }
 
-
-            _dbService.UpdateBook(existingBook);
-
-            return Ok("Libro aggiornato correttamente!");
+            try
+            {
+                _dbService.UpdateBook(existingBook);
+                return Ok("Libro aggiornato correttamente!");
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, "Si è verificato un errore durante l'aggiornamento del libro.");
+            }
         }
 
-     
 
 
         [HttpDelete("{id}")]
