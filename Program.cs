@@ -50,6 +50,8 @@ builder.Services.AddTransient<IBookservice, Bookservice>();
 builder.Services.AddTransient<IBookrepository, Bookrepository>();
 builder.Services.AddTransient<ICategoryservice, Categoryservice>();
 builder.Services.AddTransient<ICategoryrepository, Categoryrepository>();
+builder.Services.AddTransient<IAuthorservice, Authorservice>();
+builder.Services.AddTransient<IAuthorrepository, Authorrepository>();
 
 
 var app = builder.Build();

@@ -13,6 +13,11 @@
         public Category? Category { get; set; }
 
 
+        // Creo la relazione 1:N con la classe Author
+        public int? AuthorId { get; set; }
+        public Author? Author { get; set; }
+
+
         public Book()
         {
 
