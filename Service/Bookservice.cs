@@ -51,11 +51,24 @@ namespace ProjectBooks.Service
 
         public void UpdateBook(Book upadteBook)
         {
-            // Assicurati che la categoria non sia NULL e abbia un nome valido prima di aggiornare il libro
+            // Assicuro che la categoria non sia NULL e abbia un nome valido prima di aggiornare il libro
             if (upadteBook.Category == null || string.IsNullOrWhiteSpace(upadteBook.Category.Name))
             {
                 throw new ArgumentException("Il nome della categoria non può essere nullo o vuoto.");
             }
+
+            // Assicuro che l'autore non sia NULL e abbia un nome valido prima di aggiornare il libro
+            if (upadteBook.Author == null || string.IsNullOrWhiteSpace(upadteBook.Author.Name))
+            {
+                throw new ArgumentException("Il nome dell'autore non può essere nullo o vuoto.");
+            }
+
+            // Assicuro che l'autore non sia NULL e abbia un cognome valido prima di aggiornare il libro
+            if (upadteBook.Author == null || string.IsNullOrWhiteSpace(upadteBook.Author.Surname))
+            {
+                throw new ArgumentException("Il cognome dell'autore non può essere nullo o vuoto.");
+            }
+
 
             _dbRepo.UpdateBook(upadteBook);
         }
